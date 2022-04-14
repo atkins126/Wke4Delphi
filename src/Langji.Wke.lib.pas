@@ -9,6 +9,7 @@ uses
 // ================================wkeWebView============================
 var
   UseFastMB: Boolean = False;
+  DontUseWke: Boolean = False;
   wkeLibHandle: THandle = 0;
   wkeLibFileName: string = 'node.dll';
   wkePluginDir: string = '';
@@ -362,7 +363,7 @@ function LoadWkeLibaraly(const wkeLibFilePath: string = ''): Boolean;
 
 procedure UnLoadWkeLibaraly();
 
-function WkeLoadLibAndInit(mbInitCallback: TProc): Boolean;
+function WkeLoadLibAndInit(): Boolean;
 
 procedure WkeFinalizeAndUnloadLib;
 
@@ -385,17 +386,17 @@ asm
    {$ENDIF DEBUG}end;
 {$ENDIF UseVcFastCall}
 
-function WkeLoadLibAndInit(mbInitCallback: TProc): Boolean;
+function WkeLoadLibAndInit(): Boolean;
 begin
   result := false;
 
-  if not LoadWkeLibaraly() then
+  if (not DontUseWke) and (not LoadWkeLibaraly()) then
     Exit;
 
   //Èç¹ûÊÇfastmb
   if UseFastMB then
   begin
-    result := mbUserInit(mbInitCallback);
+    result := mbUserInit();
     Exit;
   end
   else

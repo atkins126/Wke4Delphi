@@ -8,6 +8,8 @@
 
 unit Langji.Miniblink.types;
 
+{$MINENUMSIZE 4}
+
 interface
 
 uses
@@ -303,6 +305,9 @@ type
     mask: Cardinal;
     blinkThreadInitCallback: mbOnBlinkThreadInitCallback;
     blinkThreadInitCallbackParam: Pointer;
+    version: Integer;
+    mainDllPath: PWChar;
+    mainDllHandle: HMODULE;
   end;
 
   PmbSettings = ^TmbSettings;
